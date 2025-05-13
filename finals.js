@@ -41,7 +41,7 @@ let shopItems = [
   {
     name: "Buy 3 Rerolls",
     cost: 500,
-    action: () => { rerollsLeft += 3; },
+    action: () => { rollups += 3; },
   },
   {
     name: "Increase Max Hands",
