@@ -41,7 +41,7 @@ let numCap = 6;
 let jex = 0;
 
 let deck = [];
-let cardsLeft = 52;
+let cardsLeft = 0;
 let selectedCardIndex = -1;
 let showHandValues = false;
 let roundNumber = 1;
@@ -412,6 +412,8 @@ function startNewGame() {
   cardsLeft = 52;
   deck = createDeck();
   shuffleDeck(deck);
+  hand = deck.splice(0, 5);
+  cardsLeft = deck.length;
   targetScore = 500;
   rerollsLeft = 10;
   rollups = 0;
