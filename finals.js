@@ -282,6 +282,10 @@ function handleShopClick() {
 
 function drawCard(card, x, y) {
   push();
+  if(cardsLeft <= 0)
+  {
+    drawGameOver()
+  }
   translate(x, y);
   fill(255);
   rect(0, 0, 120, 160, 10);
