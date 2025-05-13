@@ -244,7 +244,7 @@ function mousePressed() {
   }
   
   if (gamePhase === 'gameover') {
-    gamePhase = 'menu'
+   startNewGame();
   }
 
   if (gamePhase === 'playing') {
@@ -434,6 +434,7 @@ function startNewRound() {
   gamePhase = 'playing';
   deck = createDeck();
   shuffleDeck(deck);
+  cardsLeft = deck.length;
   if (roundNumber <= 4) 
 {
   targetScore += 500;
