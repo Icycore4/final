@@ -97,6 +97,7 @@ function drawGame() {
   text(`Current Score: ${score}`, 20, 60);
   text(`Hands Played: ${handsPlayed}/${maxHands}`, 20, 90);
   text(`Rerolls Left: ${rerollsLeft}`, 20, 120);
+  text(`Cards Left: ${cardsLeft}`, width - 200, 150);
   text(`Round: ${roundNumber}`, width - 200,60);
   text(`Joker slots: ${numCap}`, width - 200, 90);
   text(`Jokers: ${jex}`, width - 200, 120);
@@ -349,6 +350,8 @@ function startNewGame() {
   scoreMultiplier = 1.0;
   roundNumber = 1;
   money = 0;
+  jex = 0;
+  numCap = 6;
   mysteryCards = [];
 }
 
