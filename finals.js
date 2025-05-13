@@ -1,8 +1,13 @@
 // FULL UPDATED CODE BELOW
 
 let hand = []; 
-let suits = ['hearts', 'diamonds', 'clubs', 'spades'];
-let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'];
+let suitsAll = ['hearts', 'diamonds', 'clubs', 'spades'];
+let ranksAll = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'];
+let suits = suitsAll;
+let ranks = ranksAll;
+
+let selectedDeckType = 'standard';
+
 let suitSymbols =
 {
   hearts: '♥',
@@ -11,6 +16,12 @@ let suitSymbols =
   spades: '♠'
 };
 
+let deckOptions = [
+  { name: 'Standard Deck', suits: suitsAll, ranks: ranksAll },
+  { name: 'Cut Deck (No 6–10)', suits: suitsAll, ranks: [2, 3, 4, 5, 'J', 'Q', 'K', 'A'] },
+  { name: 'Dechrome Deck (2 suits)', suits: ['hearts', 'spades'], ranks: ranksAll }
+];
+
 let score = 0;
 let targetScore = 500;
 let lastHandResult = '';
@@ -18,7 +29,7 @@ let lastHandPoints = 0;
 let handEvaluated = false;
 let handsPlayed = 0;
 let maxHands = 6;
-let gamePhase = 'playing';
+let gamePhase = 'menu'; // Initial phase now set to 'menu'
 let win = false;
 let rerollsLeft = 10;
 let rollups = 0;
@@ -74,13 +85,15 @@ let shopItems = [
 
 function setup() {
   createCanvas(1250, 600);
-  startNewGame();
+  gamePhase = 'menu'; // Start in menu
 }
 
 function draw() {
   background(30, 120, 70);
 
-  if (gamePhase === 'playing') {
+  if (gamePhase === 'menu') {
+    drawMainMenu();
+  } else if (gamePhase === 'playing') {
     drawGame();
   } else if (gamePhase === 'shop') {
     drawShop();
@@ -88,6 +101,31 @@ function draw() {
     drawGameOver();
   }
 }
+
+
+function drawMainMenu() {
+  background(50);
+  fill(255);
+  textAlign(CENTER, TOP);
+  textSize(36);
+  text('Select a Deck Type', width / 2, 60);
+
+  textSize(24);
+  for (let i = 0; i < deckOptions.length; i++) {
+    let x = width / 2 - 200;
+    let y = 150 + i * 100;
+    let w = 400;
+    let h = 60;
+    let hovered = mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h;
+
+    fill(hovered ? '#77cc77' : '#55aa55');
+    rect(x, y, w, h, 15);
+    fill(255);
+    text(deckOptions[i].name, width / 2, y + h / 2);
+  }
+}
+
+
 
 function drawGame() {
   fill(255);
@@ -199,6 +237,12 @@ function drawGameOver() {
 }
 
 function mousePressed() {
+
+  if (gamePhase === 'menu') {
+    handleMenuClick();
+    return;
+  }
+  
   if (gamePhase === 'gameover') {
     startNewGame();
     loop();
@@ -240,6 +284,26 @@ function mousePressed() {
     handleShopClick();
   }
 }
+
+
+function handleMenuClick() {
+  for (let i = 0; i < deckOptions.length; i++) {
+    let x = width / 2 - 200;
+    let y = 150 + i * 100;
+    let w = 400;
+    let h = 60;
+
+    if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+      selectedDeckType = deckOptions[i].name;
+      suits = deckOptions[i].suits;
+      ranks = deckOptions[i].ranks;
+      startNewGame();
+      return;
+    }
+  }
+}
+
+
 
 
 function handleShopClick() {
