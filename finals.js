@@ -245,6 +245,7 @@ function mousePressed() {
   
   if (gamePhase === 'gameover') {
    startNewGame();
+    return;
   }
 
   if (gamePhase === 'playing') {
@@ -398,7 +399,8 @@ function generateJoker() {
   }
 }
 
-function startNewGame() {
+function startNewGame() 
+{
   score = 0;
   hand = [];
   handsPlayed = 0;
@@ -407,7 +409,6 @@ function startNewGame() {
   lastHandPoints = 0;
   gamePhase = 'playing';
   win = false;
-  cardsLeft = 52;
   deck = createDeck();
   shuffleDeck(deck);
   hand = deck.splice(0, 5);
