@@ -244,9 +244,7 @@ function mousePressed() {
   }
   
   if (gamePhase === 'gameover') {
-    startNewGame();
-    loop();
-    return;
+    gamePhase = 'menu'
   }
 
   if (gamePhase === 'playing') {
@@ -434,7 +432,6 @@ function startNewRound() {
   lastHandResult = '';
   lastHandPoints = 0;
   gamePhase = 'playing';
-  cardsLeft = 52;
   deck = createDeck();
   shuffleDeck(deck);
   if (roundNumber <= 4) 
