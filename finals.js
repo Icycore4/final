@@ -18,8 +18,9 @@ let suitSymbols =
 
 let deckOptions = [
   { name: 'Standard Deck', suits: suitsAll, ranks: ranksAll },
-  { name: 'Cut Deck (No 6–10)', suits: suitsAll, ranks: [2, 3, 4, 5, 'J', 'Q', 'K', 'A'] },
-  { name: 'Dechrome Deck (2 suits)', suits: ['hearts', 'spades'], ranks: ranksAll }
+  { name: 'Cut Deck (No midranks)', suits: suitsAll, ranks: [2, 3, 4, 5, 'J', 'Q', 'K', 'A'] },
+  { name: 'Dechrome Deck (2 suits)', suits: ['hearts', 'spades'], ranks: ranksAll },
+  { name: 'Valence Deck (???)', suits: ['hearts'], ranks: [2, 3, 4, 5, 6, 7] }
 ];
 
 let score = 0;
@@ -45,6 +46,13 @@ let cardsLeft = 0;
 let selectedCardIndex = -1;
 let showHandValues = false;
 let roundNumber = 1;
+let l1 = 0.63
+let l2 = 0.88
+let l3 = 0.95
+let l4 = 0.99
+
+
+
 
 let mysteryCards = []; // now Jokers!
 
@@ -55,9 +63,15 @@ let shopItems = [
     action: () => { rollups += 3; },
   },
   {
-    name: "Increase Max Hands",
-    cost: 800,
-    action: () => { maxHands++; },
+    name: "boost joker luck",
+    cost: 400,
+    action: () => { 
+    l1-= 0.045
+    l2-= 0.04
+    l3-= 0.025
+    l4-=0.015
+    
+  },
   },
   {
     name: "Buy Mystery Joker",
@@ -106,16 +120,16 @@ function draw() {
 function drawMainMenu() {
   background(50);
   fill(255);
-  textAlign(CENTER, TOP);
+  textAlign(CENTER, CENTER);
   textSize(36);
-  text('Select a Deck Type', width / 2, 60);
+  text('Select a Deck', width / 2, 60);
 
   textSize(24);
   for (let i = 0; i < deckOptions.length; i++) {
-    let x = width / 2 - 200;
-    let y = 150 + i * 100;
-    let w = 400;
-    let h = 60;
+    let x = width / 2 - 150;
+    let y = 125 + i * 100;
+    let w = 300;
+    let h = 65;
     let hovered = mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h;
 
     fill(hovered ? '#77cc77' : '#55aa55');
@@ -384,13 +398,13 @@ function drawMysteryCard(x, y, joker) {
 
 function generateJoker() {
   let r = random(1);
-  if (r < 0.63) {
+  if (r < l1) {
     return { multiplier: random(1, 2), color: 'gray' };
-  } else if (r < 0.88) {
+  } else if (r < l2) {
     return { multiplier: random(2, 3.5), color: '#9FE2BF'  };
-  } else if (r < 0.95) {
+  } else if (r < l3) {
     return { multiplier: random(3.5, 10), color: '#f22253' };
-  } else if (r < 0.99) {
+  } else if (r < l4) {
     numCap+=1
     return { multiplier: random(10, 50), color: '#7b03fc' };
   } else {
