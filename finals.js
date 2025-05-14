@@ -122,7 +122,7 @@ function drawMainMenu() {
   fill(255);
   textAlign(CENTER, CENTER);
   textSize(36);
-  text('Select a Deck', width / 2, 60);
+  text('Balala 2- Select a Deck', width / 2, 60);
 
   textSize(24);
   for (let i = 0; i < deckOptions.length; i++) {
@@ -508,6 +508,7 @@ function scoreHand() {
   if (score >= targetScore) {
     let moneyGained = 400 + Math.pow(1.3, roundNumber) * 100;
     money += floor(moneyGained);
+    money += (maxHands - handsPlayed) * 100
     if( score < 3*targetScore)
     {
     money += (score-targetScore) * 0 
